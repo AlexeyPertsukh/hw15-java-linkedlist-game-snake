@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Game {
 
-    private final Map map;
+    private final GameField gameField;
     private final Snake snake;
     private final Scanner sc;
     private  String command;
@@ -13,7 +13,7 @@ public class Game {
     private boolean commandOk;
 
     public Game() {
-        map = new Map();
+        gameField = new GameField();
         snake = new Snake();
         sc = new Scanner(System.in);
     }
@@ -22,7 +22,7 @@ public class Game {
     public void go(){
         printOnStart();
         do {
-            map.action(snake);
+            gameField.action(snake);
             printCommand();
             do {
                 inputCommand();
@@ -37,13 +37,12 @@ public class Game {
 
     //список команд
     private void printCommand() {
-        System.out.printf("%s,%s,%s,%s - направление   %s - выход \n",  Command.UP.getKey(),
+        System.out.printf("%s,%s,%s,%s - направление   %s - выход \n\n",  Command.UP.getKey(),
                                                                         Command.DOWN.getKey(),
                                                                         Command.LEFT.getKey(),
                                                                         Command.RIGHT.getKey(),
                                                                         Command.END.getKey()
                                                                     );
-        System.out.println();
     }
 
     //ввод команд
@@ -95,7 +94,7 @@ public class Game {
             return;
         }
 
-        int code = map.checkCell(newX, newY);
+        int code = gameField.checkCell(newX, newY);
 
         if(code == Const.CODE_CRASH || code == Const.CODE_EAT_STONE) {
             checkDeath(code);
@@ -107,7 +106,6 @@ public class Game {
         if(code != Const.CODE_EAT_APPLE) {
             snake.delFirstPoint();
         }
-//        System.out.println("!!!!"+code);        //!!!!!
     }
 
     //змея скончалась
@@ -125,7 +123,6 @@ public class Game {
         Color.printlnColorRed(message);
         endGame = true;
     }
-
 
     private void printOnStart() {
         System.out.printf("%s %s \n",Const.NAME_GAME, Const.VERSION);

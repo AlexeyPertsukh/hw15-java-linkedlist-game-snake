@@ -1,7 +1,7 @@
 package game_snake;
 
 //игровое поле
-public class Map {
+public class GameField {
 
     private static final int CLEAR_CELL = 0;
     private static final String FORMAT_SNAKE_BODY = "[%d]";
@@ -11,7 +11,7 @@ public class Map {
     private final int[][] arr;
     private int step;
 
-    public Map() {
+    public GameField() {
         arr = new int[Const.ARR_LENGTH][Const.ARR_LENGTH];
     }
 
@@ -28,9 +28,9 @@ public class Map {
 
     //печать игрового поля
     public void print(Snake snake) {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int i = 0; i < (Const.ARR_LENGTH * 3); i++) {
-            str += "-";
+            str.append("-");
         }
         System.out.println(str);
 
@@ -38,7 +38,7 @@ public class Map {
             for (int j = 0; j < arr[i].length; j++) {
                 String strVal;
                 int val = arr[i][j];
-                String format = "";
+                String format;
                 if(val == Const.SNAKE) {
                     format = getStrFormatSnake(snake.getLastPoint(), j, i);
                 }
@@ -139,8 +139,8 @@ public class Map {
             int x;
             int y;
             do {
-                x = My.random(Const.ARR_LENGTH);
-                y = My.random(Const.ARR_LENGTH);
+                x = Util.random(Const.ARR_LENGTH);
+                y = Util.random(Const.ARR_LENGTH);
             }
             while(arr[y][x] != CLEAR_CELL);
             arr[y][x] = type;
